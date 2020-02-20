@@ -1,0 +1,24 @@
+{% load static %}
+<!-- Header-->
+{% block header %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="Arduino Projects">
+    <meta name="description" content="Arduino Projects">
+    <meta name="keywords" content="Arduino, projects, github">
+    <link rel="icon" href="{% static 'website/bootstrap-css/assets/images/logo.png' %}" type="icon">
+    <title>Arduino Projects</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <script>
+      function countChar(val) {
+        var len = val.value.length;
+        var count = $('#charNum').text(0 + len);
+      };
+    </script>
+</head>
+
+{% endblock %}

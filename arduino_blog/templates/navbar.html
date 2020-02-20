@@ -1,0 +1,54 @@
+{% load static %}
+<!-- Navigation -->
+{% block nav %}
+    <nav id="site-nav" class="navbar navbar-fixed-top navbar-custom">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- logo -->
+                <div class="site-branding">
+                    <a class="logo" href="{{SITE_URL}}">
+                    </a>
+                </div>
+
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-items" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div><!-- /.navbar-header -->
+
+            <div class="collapse navbar-collapse" id="navbar-items">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <!-- navigation menu -->
+                    <li class="active"><a data-scroll href="{{SITE_URL}}/#about">About</a></li>
+                    <li><a data-scroll href="{{SITE_URL}}/#contact-us">Contact Us</a></li>
+                    {% if user.is_authenticated %}
+                      <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'auth:login' %}" >
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        {{ user.username }}!<span class="caret"></span>
+                        </a>
+                        {% if user.profile.is_email_verified %}
+                        <ul class="dropdown-menu">  
+                            <li><a href="{% url 'arduino_blog:submitabstract' %}">Submit Abstract</a></li>
+                            <li><a href="{% url 'arduino_blog:user_logout' %}"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
+                        </ul>
+                        {% else %}
+                            <ul class="dropdown-menu">  
+                            <li><a href="{% url 'arduino_blog:user_logout' %}"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
+                            </ul>
+                        {% endif %}
+                      </li>
+                        {% else %}
+                     <li><a href="{% url 'arduino_blog:user_login' %}">Login</a></li> 
+                    {% endif %}
+                </ul>
+
+            </div>
+        </div><!-- /.container -->
+    </nav>
+
+{% endblock %}
