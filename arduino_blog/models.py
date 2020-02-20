@@ -71,6 +71,8 @@ states = (
     ("IN-PY",    "Puducherry")
 )
 
+
+""" Base class created to collect creation date and modified date. Can be inherited in the other models """
 class BaseClass(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
