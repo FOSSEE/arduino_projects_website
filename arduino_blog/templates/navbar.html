@@ -1,0 +1,51 @@
+{% load static %}
+<!-- Navigation -->
+{% block nav %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Open Source Hardware Project </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{SITE_URL}}/#about">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{SITE_URL}}/#contact-us">Contact</a>
+      </li>
+      {% if user.is_authenticated %}
+      <li class="nav-item">
+         <a class="nav-link" href="{% url 'arduino_blog:submitabstract' %}">Submit Abstract</a>
+      </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" href="{% url 'auth:login' %}" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        {{ user.username }}!<span class="caret"></span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                {% if user.profile.is_email_verified %}
+              
+                   
+                    <a href="{% url 'arduino_blog:user_logout' %}"><i class="fa fa-sign-out"></i>&nbsp;Logout</a>
+
+                {% else %} 
+                        <a href="{% url 'arduino_blog:user_logout' %}"><i class="fa fa-sign-out"></i>&nbsp;Logout</a>
+                
+
+                {% endif %}
+            </div>
+        </li>
+    {% else %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'arduino_blog:user_login' %}">Login</a>
+    </li>
+    {% endif %}
+    </ul>
+  </div>
+</nav>
+
+{% endblock %}
