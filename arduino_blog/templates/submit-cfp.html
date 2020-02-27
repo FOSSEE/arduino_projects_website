@@ -12,6 +12,7 @@
             </center>
             <hr>
                 <div class="row">
+                <div class="col-sm-12">
                  <form  action="" method=POST enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="name_of_author">Name of the author
@@ -48,21 +49,24 @@
                  {% render_field proposal_form.attachment %}
                     </div>
                     <div class="form-inline">
-                        <div class="checkbox">
+                        <div class="form-check">
                         {% render_field proposal_form.terms_and_conditions %}
-                            <label for="terms_and_conditions">I agree to the terms and conditions
+                            <label for="terms_and_conditions"> &nbsp; I agree to the terms and conditions
                                 <span style="color:red;">*</span>
                             </label>
                             
                         </div>
                     </div>
+
               {% csrf_token %}
                     <center>
                         <button id="subbtn" class="btn btn-info" type="submit" >Submit</button>
                         <a href="#" class="btn btn-info" role="button">Back</a>
                     </center>
-                </form> 
+                </form>
+                </div>
                 </div>
             </div>
         </section>
+        </br>
 {% endblock %}

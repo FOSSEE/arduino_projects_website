@@ -1,10 +1,1 @@
-(function($) {
-    'use strict';
-    var fields = $('#django-admin-prepopulated-fields-constants').data('prepopulatedFields');
-    $.each(fields, function(index, field) {
-        $('.empty-form .form-row .field-' + field.name + ', .empty-form.form-row .field-' + field.name).addClass('prepopulated_field');
-        $(field.id).data('dependency_list', field.dependency_list).prepopulate(
-            field.dependency_ids, field.maxLength, field.allowUnicode
-        );
-    });
-})(django.jQuery);
+/home/prashant/www/html/python/python_3.x/arduino-hosting/env-arduino/lib/python3.6/site-packages/django/contrib/admin/static/admin/js/prepopulate_init.js

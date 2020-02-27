@@ -199,6 +199,7 @@ def submitabstract(request):
                 data.attachment = request.FILES
                 data.save()
                 context['proposal_submit'] = True
+                #mail function
                 return render_to_response('index.html', context)
             else:
                 context['proposal_form'] = form

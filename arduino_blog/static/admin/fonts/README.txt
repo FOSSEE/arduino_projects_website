@@ -1,2 +1,1 @@
-Roboto webfont source: https://www.google.com/fonts/specimen/Roboto
-Weights used in this project: Light (300), Regular (400), Bold (700)
+/home/prashant/www/html/python/python_3.x/arduino-hosting/env-arduino/lib/python3.6/site-packages/django/contrib/admin/static/admin/fonts/README.txt

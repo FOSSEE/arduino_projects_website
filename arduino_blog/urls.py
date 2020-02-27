@@ -7,11 +7,11 @@ from . import views
 
 app_name = 'arduino_blog'
 urlpatterns = [
-	url(r'^logout/$', views.user_logout, name="user_logout"),
+	url(r'^accounts/logout/$', views.user_logout, name="user_logout"),
 	url(r'^activate/(?P<key>.+)$', views.activate_user, name="activate"),
     url(r'^new_activation/$', views.new_activation, name='new_activation'),
 	url(r'^submit-abstract/$', views.submitabstract, name='submitabstract'),
-    url(r'^register/$', views.user_register, name='user_register'),
-    url(r'^login/$', views.user_login, name='user_login'),
+    url(r'^accounts/register/$', views.user_register, name='user_register'),
+    url(r'^accounts/login/$', views.user_login, name='user_login'),
 	url(r'^$', views.index, name='index'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

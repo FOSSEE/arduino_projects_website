@@ -23,11 +23,10 @@
                     <br/>
                 </center>
          {% endif %}
-         
                             <form action="" method="POST">
                             {% csrf_token %}
                                 {{ form.as_p }}
-                                <button class="button special" name ="login" type="submit">Login</button>
+                                <button type="button" class="btn btn-success"  name ="login" type="submit">Login</button>
                                 <br/>
                                 <br/>
                                 <a style="padding-right : 20px;" href="{% url 'arduino_blog:user_register' %}" class="btn btn btn-primary">Create an Account
