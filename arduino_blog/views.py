@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render_to_response, render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
 from django.template import RequestContext
 from django.contrib.auth.forms import UserCreationForm
