@@ -132,9 +132,10 @@ STATIC_ROOT = 'arduino_blog/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = "/downloads/"
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 SENDER_EMAIL = SENDER_EMAIL
 BCC_EMAIL_ID = BCC_EMAIL_ID
+
