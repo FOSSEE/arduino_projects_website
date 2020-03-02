@@ -44,14 +44,12 @@ def is_proposal_submitted(func):
                     )
                 else:
                     _q = Proposal.objects
-                    _q = _q.filter(Q(user_id=user.id)&Q(proposal_status='0'))
-                    _q = _q.values('proposal_status')
-                    _q = _q.order_by('proposal_status');
-                    is_sub = _q.all()[:1]
-                    if is_sub == 0:
+                    is_sub = _q.get(Q(user_id=user.id)&Q(proposal_status='0'))
+                    if is_sub.proposal_status == 0:
                         context['success'] = True
                         context['msg'] = "You have alredy submited a \
-                                            proposal"
+                                          proposal. Your proposal is under \
+                                          review"
                         return render(
                             request, 'dashboard.html', context
                         )
