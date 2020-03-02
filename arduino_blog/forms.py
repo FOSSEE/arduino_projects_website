@@ -237,9 +237,9 @@ class AbstractProposalForm(forms.ModelForm):
                                error_messages={
                                    'required': 'About the author field required.'},
                                )
-    attachment = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}),
-                                 label='Please upload relevant documents (if any)',
-                                 required=False,)
+    # attachment = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}),
+    #                              label='Please upload relevant documents (if any)',
+    #                              required=False,)
     title_of_the_project = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title of the Project'}),
                             required=True,
                             error_messages={
@@ -272,17 +272,3 @@ class AbstractProposalForm(forms.ModelForm):
         super(AbstractProposalForm, self).__init__(*args, **kwargs)
         self.fields['completion_date'].disabled = True
         self.fields['completion_date'].initial = (datetime.date.today() + relativedelta(months=1))
-
-    def clean_attachment(self):
-        import os
-        cleaned_data = self.cleaned_data
-        attachment = cleaned_data.get('attachment', None)
-        if attachment:
-            ext = os.path.splitext(attachment.name)[1]
-            valid_extensions = ['.pdf']
-            if not ext in valid_extensions:
-                raise forms.ValidationError(
-                    u'File not supported!  Only .pdf file is accepted')
-            if attachment.size > (5*1024*1024):
-                raise forms.ValidationError('File size exceeds 5MB')
-        return attachment
