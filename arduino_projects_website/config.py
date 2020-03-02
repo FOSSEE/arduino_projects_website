@@ -8,7 +8,7 @@ SYSADMINS = 'email@email'
 SYS_SERVER_EMAIL = 'email@email'
 
 ALLOWED_HOSTS_USER = ['127.0.0.1']
-SECRET_KEY_USER = '' # enter secret key
+SECRET_KEY_USER = '7*guu@#er)o2543z-5df$e%)_&&3!ez$!x7$!qtyr4ejj+p*0&' # enter secret key
 DEBUG_USER = True
 
 TO_EMAIL = 'email@email'
