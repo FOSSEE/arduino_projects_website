@@ -5,6 +5,7 @@ from django.forms import ModelForm, widgets
 import datetime
 from dateutil.relativedelta import relativedelta
 
+from django.utils import timezone
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -270,8 +271,8 @@ class AbstractProposalForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AbstractProposalForm, self).__init__(*args, **kwargs)
         self.fields['completion_date'].disabled = True
-        self.fields['completion_date'].initial = (datetime.date.today() + relativedelta(months=1)).strftime("%Y-%m-%d")
-        
+        self.fields['completion_date'].initial = (datetime.date.today() + relativedelta(months=1))
+
     def clean_attachment(self):
         import os
         cleaned_data = self.cleaned_data

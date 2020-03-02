@@ -19,7 +19,6 @@
                             <span style="color:red;">*</span>:
                         </label>
                         <input class="form-control" id="your_name" type="text" name="your_name" value="{{ user.first_name }} {{ user.last_name }}" disabled>
-                 
                     </div>
                     <div class="form-group">
                         <label for="about_the_author">About the author
@@ -48,6 +47,13 @@
                         <label for="attachment">Attachments:</label>
                  {% render_field proposal_form.attachment %}
                     </div>
+                    <div class="form-group">
+                        <label for="abstract">Expected completion date (Aprox. 1 month)
+                            <span style="color:red;">*</span>:
+                        
+                        </label>
+                    {% render_field proposal_form.completion_date %}
+                    </div>
                     <div class="form-inline">
                         <div class="form-check">
                         {% render_field proposal_form.terms_and_conditions %}
@@ -69,4 +75,12 @@
             </div>
         </section>
         </br>
+<script>
+  $(function () {
+    $("#datetimepicker1").datetimepicker({
+      format: 'DD/MM/YYYY',
+      defaultDate: "11/1/2013",
+    });
+  });
+</script>
 {% endblock %}
