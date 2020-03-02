@@ -43,23 +43,28 @@ def is_proposal_submitted(func):
                         request, 'activation-status.html', context
                     )
                 else:
-                    _q = Proposal.objects
-                    is_sub = _q.get(Q(user_id=user.id)&Q(proposal_status='0'))
-                    if is_sub.proposal_status == 0:
-                        context['success'] = True
-                        context['msg'] = "You have alredy submited a \
+                    try:
+                        _q = Proposal.objects
+                        is_sub = _q.get(Q(user_id=user.id)&Q(proposal_status='0'))
+                        if is_sub.proposal_status == 0:
+                            context['success'] = True
+                            context['msg'] = "You have alredy submited a \
                                           proposal. Your proposal is under \
                                           review"
-                        return render(
-                            request, 'dashboard.html', context
-                        )
-                    else:
-                        context['success'] = False
-                        context['msg'] = "You can submit a new \
-                                            proposal"
-                        return render(
-                            request, 'dashboard.html', context
-                        )
+                            return render(
+                                request, 'dashboard.html', context
+                            )
+                        else:
+                            context['success'] = False
+                            context['msg'] = "You can submit a new \
+                                                proposal"
+                            return render(
+                                request, 'dashboard.html', context
+                            )
+                    except Proposal.DoesNotExist:
+                        is_sub = None
+                        print("-----------", is_sub)
+                    
             return func(request, *args, **kwargs)
         except Exception as e:
             print (e)
