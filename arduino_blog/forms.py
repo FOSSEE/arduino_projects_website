@@ -2,6 +2,10 @@ from django import forms
 
 from django.forms import ModelForm, widgets
 
+import datetime
+from dateutil.relativedelta import relativedelta
+
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator, MinValueValidator, \
@@ -23,6 +27,7 @@ from arduino_blog.models import (
 )
 from .send_emails import (send_user_mail,
                           generate_activation_key)
+from arduino_blog.views import *
 
 UNAME_CHARS = letters + "._" + digits
 PWD_CHARS = letters + punctuation + digits
@@ -245,13 +250,28 @@ class AbstractProposalForm(forms.ModelForm):
                                error_messages={
                                    'required': 'Abstract field required.'},
                                )
+
+    completion_date = forms.DateTimeField(
+            input_formats=['%YY-%mm-%dd'],
+            widget=forms.DateTimeInput(attrs={
+                'class': 'form-control datetimepicker-input',
+                'data-target': '#datetimepicker1'
+            })
+        )
+
     terms_and_conditions = forms.BooleanField(widget=forms.CheckboxInput(), 
         required=True, label='I agree to the terms and conditions')
 
     class Meta:
         model = Proposal
-        exclude = ('user','name_of_author', 'email', 'status', 'rate')
+        exclude = ('user','name_of_author', 'email', 'status', 'rate','proposal_status', 'approval_date')
 
+
+    def __init__(self, *args, **kwargs):
+        super(AbstractProposalForm, self).__init__(*args, **kwargs)
+        self.fields['completion_date'].disabled = True
+        self.fields['completion_date'].initial = (datetime.date.today() + relativedelta(months=1)).strftime("%Y-%m-%d")
+        
     def clean_attachment(self):
         import os
         cleaned_data = self.cleaned_data

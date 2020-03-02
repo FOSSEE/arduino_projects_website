@@ -119,5 +119,8 @@ class Proposal(BaseClass):
     abstract = models.TextField(max_length=700)
     attachment = models.FileField(upload_to=get_document_dir)
     status = models.CharField(max_length=100, default='Pending', editable=True)
+    completion_date = models.DateTimeField(null=True, blank=True)
+    approval_date = models.DateTimeField(null=True, blank=True)
+    proposal_status = models.IntegerField(default=0, editable=True)
     #tags = models.CharField(max_length=250)
     terms_and_conditions = models.BooleanField(default= 'True')

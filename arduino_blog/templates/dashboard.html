@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block css%}
+    <link rel="stylesheet" href="{{ URL_ROOT }}/static/yaksh/css/dashboard.css" type="text/css" />
+{% endblock %}
+{% block content %}
+{% if success %}
+    <center>
+    <div class="alert alert-success" role="alert">
+        <strong> {{ msg }} </strong>
+    </div>
+    <!-- <a href="{{URL_ROOT}}/exam/"> Home </a> -->
+    </center>
+{% else %}
+    {% if msg %}
+        <center>
+        <div class="alert alert-warning" role="alert">
+            <strong> {{ msg }} </strong>
+        </div>
+    {% endif %}
+{% endif %}
+<br/>
+{% endblock content %}

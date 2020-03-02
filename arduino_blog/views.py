@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render_to_response, render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
 from django.template import RequestContext
 from django.contrib.auth.forms import UserCreationForm
@@ -16,8 +16,9 @@ from .send_emails import (send_user_mail,
                           generate_activation_key)
 from django.utils import timezone
 from arduino_projects_website.settings import URL_ROOT
-from .decorators import email_verified
-
+from .decorators import email_verified, is_proposal_submitted
+from django.core.mail import EmailMultiAlternatives
+import datetime
 
 def my_redirect(url):
     """An overridden redirect to deal with URL_ROOT-ing. See settings.py
@@ -183,6 +184,7 @@ def new_activation(request, email=None):
 @csrf_protect
 @login_required
 @email_verified
+@is_proposal_submitted
 def submitabstract(request):
     context = {}
     if request.user.is_authenticated:
@@ -197,11 +199,17 @@ def submitabstract(request):
                 data.name_of_author = social_user.first_name + ' ' + social_user.last_name
                 data.email = social_user.email
                 data.attachment = request.FILES
+                data.proposal_status = 0
+                data.approval_date = datetime.date.today()
                 data.save()
                 context['proposal_submit'] = True
+                context['display_message'] = """Thank you for your submission! """
                 #mail function
+                #message = render_to_string('email/propodal_received.html', context)
+                #send_email(sender_email, to, subject, message, bcc_email)
                 return render_to_response('index.html', context)
             else:
+                print(form.errors)
                 context['proposal_form'] = form
                 #context['proposals_a'] = proposals_a
                 template = loader.get_template('submit-cfp.html')
@@ -212,3 +220,17 @@ def submitabstract(request):
     else:
         context['login_required'] = True
         return render_to_response('login.html', context)
+
+
+def send_email(sender_email, to, subject, message, bcc_email=None):
+    email = EmailMultiAlternatives(
+        subject, '',
+        sender_email, to,
+        bcc=[bcc_email],
+        headers={"Content-type": "text/html;charset=iso-8859-1"}
+    )
+    email.attach_alternative(message, "text/html")
+    email.content_subtype = 'html'  # Main content is text/html
+    email.mixed_subtype = 'related'
+    email.send(fail_silently=True)
+
