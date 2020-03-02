@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import render_to_string
 from django.template import loader
 from django.template import RequestContext
 from django.contrib.auth.forms import UserCreationForm
@@ -205,9 +206,16 @@ def submitabstract(request):
                 context['proposal_submit'] = True
                 context['display_message'] = """Thank you for your submission! """
                 #mail function
-                #message = render_to_string('email/propodal_received.html', context)
-                #send_email(sender_email, to, subject, message, bcc_email)
-                return render_to_response('index.html', context)
+                context['name'] = social_user.first_name + ' ' + social_user.last_name
+                subject = ["test mail"]
+                message = render_to_string('email/proposal_received.html',\
+                        context)
+                print(message)
+                sender_email = [SENDER_EMAIL]
+                to = [social_user.email]
+                bcc_email = [BCC_EMAIL_ID]
+                send_email(sender_email, to, subject, message, bcc_email)
+                return my_render_to_response('index.html', context)
             else:
                 print(form.errors)
                 context['proposal_form'] = form
@@ -219,7 +227,7 @@ def submitabstract(request):
             return render(request, 'submit-cfp.html', {'proposal_form': form})
     else:
         context['login_required'] = True
-        return render_to_response('login.html', context)
+        return my_render_to_response('login.html', context)
 
 
 def send_email(sender_email, to, subject, message, bcc_email=None):
@@ -232,5 +240,6 @@ def send_email(sender_email, to, subject, message, bcc_email=None):
     email.attach_alternative(message, "text/html")
     email.content_subtype = 'html'  # Main content is text/html
     email.mixed_subtype = 'related'
+    print("mail sent")
     email.send(fail_silently=True)
 
