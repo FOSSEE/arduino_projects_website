@@ -1,0 +1,49 @@
+{% load static %}
+<!-- Header-->
+{% block header %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="Open Source Hardware Project">
+    <meta name="description" content="Open Source Hardware Project">
+    <meta name="keywords" content="Arduino, projects, github, hardware, Open Source Hardware Project">
+    <link rel="icon" href="{% static 'images/fossee-logo.png' %}" type="icon">
+    <title>FOSSEE - Open Source Hardware Project</title>
+  
+    <link rel="stylesheet" href="{% static 'bootstrap-4.4.1/css/bootstrap.min.css' %}">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap-4.4.1/js/bootstrap.min.js' %}"></script>
+
+   <script>
+      function countChar(val) {
+        var len = val.value.length;
+        var count = $('#charNum').text(0 + len);
+      };
+    </script>
+      <script>
+    if('{{ display_message }}'){
+      alert('{{ display_message }}');
+    }
+  </script>
+<style>
+
+    /* Stackoverflow preview fix, please ignore */
+    .navbar-nav {
+      flex-direction: row;
+    }
+    .nav-link {
+      padding-right: .5rem !important;
+      padding-left: .5rem !important;
+    }
+    
+    /* Fixes dropdown menus placed on the right side */
+    .ml-auto .dropdown-menu {
+      left: auto !important;
+      right: 0px;
+    }
+  </style>
+</head>
+
+{% endblock %}
