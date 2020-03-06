@@ -1,13 +1,1 @@
-(function($) {
-    'use strict';
-    $(function() {
-        $('.cancel-link').on('click', function(e) {
-            e.preventDefault();
-            if (window.location.search.indexOf('&_popup=1') === -1) {
-                window.history.back();  // Go back if not a popup.
-            } else {
-                window.close(); // Otherwise, close the popup.
-            }
-        });
-    });
-})(django.jQuery);
+/home/prashant/www/html/python/python_3.x/django_3.x/os-hardware/env-osh/lib/python3.6/site-packages/django/contrib/admin/static/admin/js/cancel.js
