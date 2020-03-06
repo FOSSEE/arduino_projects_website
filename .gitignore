@@ -2,9 +2,10 @@
 *.swp
 *.pyc
 config.py
-arduino_projects_website/local.py
+arduino_projects_website/config.py
 arduino_projects_website/wsgi.py
 static/CACHE/*
+static/*
 *.py[cod]
 settings.json
 arduino_projects_website.sql
