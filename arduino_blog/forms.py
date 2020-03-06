@@ -247,7 +247,8 @@ class AbstractProposalForm(forms.ModelForm):
                                error_messages={
                                    'required': 'Abstract field required.'},
                                )
-    references = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'References(if any)'})
+    references = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'References(if any)'}),
+                                required = False
                             )
     completion_date = forms.DateTimeField(
             input_formats=['%YY-%mm-%dd'],
