@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+        <section id="cfp" class="section cfp jumbotron d-flex justify-content-between">
+            <div class="container fluid">
+                <p>
+                    <center>
+                        {% if user and not user.is_anonymous %}
+                            <h3>Submit Proposal </h3>
+                        {% else %}
+                            <h3>Login</h3>
+                        {% endif %}
+                    </center>
+                </p>
+                {% if registration_complete %}
+                <center>
+                    <p>Thank You for your registration. You can now log in by clicking
+                        <a href="{% url 'arduino_blog:user_login' %}">here!</a>
+                    </p>
+                    <br/>
+                    <br/>
+                </center>
+                {% endif %}
+                <div class="row" ><div class="col-sm d-flex justify-content-center">
+                <form class="bg-info p-4" action="" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_table }}
+                    <p></p>
+                    <button class="btn btn-success" name ="login" type="submit">Login</button>
+                    <a style="padding-right : 20px;" href="{% url 'arduino_blog:user_register' %}" class="btn btn btn-primary">Create an Account
+                    </a>
+                    <br>
+                    <p><a class="btn btn btn-warning" href="/accounts/forgotpassword/">Forgot Password?</a></p>
+                </form></div></div>
+            </div>
+        </section>
+      {% endblock %}
+
+

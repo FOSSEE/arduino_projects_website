@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+    <section id="register" class="section register">
+        <div class="container fluid">
+            <center>
+                <h2>Sign Up</h2>
+            </center>
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+                <form action="" method=POST>
+                {% csrf_token %}
+                 <!-- <a style="color:red; ">{{ render_field.errors }}</a>-->
+                <div class="row">
+                <div class="col-12">
+                  <table class="table table-bordered table-responsive table-striped">
+                    <tr>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          <label for="username">Username:</label>
+                            <span style="color:red;">*</span>
+                          </div>
+                    </td>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          {% render_field form.username %}
+                          </div>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          <label for="username">Email:</label>
+                            <span style="color:red;">*</span>
+                          </div>
+                    </td>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          {% render_field form.email %}
+                          </div>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          <label for="pwd">Password:</label><span style="color:red;">*</span>
+                          </div>
+                    </td>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          {% render_field form.password %}
+                          </div>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          <label for="cnfpwd">Confirm Password:</label><span style="color:red;">*</span>
+                          </div>
+                    </td>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          {% render_field form.confirm_password %}
+                          </div>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          <label for="name">Full Name:</label><span style="color:red;">*</span>
+                          </div>
+                    </td>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          {% render_field form.title %}{% render_field form.first_name %} {% render_field form.last_name %}
+                          </div>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          <label for="contact">Contact:</label><span style="color:red;">*</span>
+                          </div>
+                    </td>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          {% render_field form.phone %}
+                          </div>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline" style="word-wrap: break-word;">
+                          <label for="institute">Institue/ Organization/ Company:</label><span style="color:red;">*</span>
+                          </div>
+                    </td>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline" style="word-wrap: break-word;">
+                          {% render_field form.institute %}<br><span style="font-size: 12px;">Enter your institute/ organisation/ company</span>
+                          </div>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline" style="word-wrap: break-word;">
+                          <label for="position">Position:</label><span style="color:red;">*</span>
+                          </div>
+                    </td>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline" style="word-wrap: break-word;">
+                          {% render_field form.position %}<br><span style="font-size: 12px;"></span>
+                          </div>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          <label for="state" style="word-wrap: break-word;">State:</label><span style="color:red;">*</span>
+                          </div>
+                    </td>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          {% render_field form.state %}
+                          </div>
+                    </tr>
+                     <tr>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          <label for="state" style="word-wrap: break-word;">City:</label><span style="color:red;">*</span>
+                          </div>
+                    </td>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          {% render_field form.city %}
+                          </div>
+                    </tr>
+                     <tr>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          <label for="state" style="word-wrap: break-word;">Pincode:</label><span style="color:red;">*</span>
+                          </div>
+                    </td>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          {% render_field form.pincode %}
+                          </div>
+                    </tr>
+                    <tr> 
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          <label for="how_did_you_hear_about_us" style="word-wrap: break-word;">How did you hear about us:</label><span style="color:red;">*</span>
+                          </div>
+                    </td>
+                    <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          {% render_field form.how_did_you_hear_about_us %}
+                          </div>
+                    </td>
+                    </tr>
+                    <tr>
+                   <!-- <td style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          </div>
+                    </td> -->
+                    <td colspan="2" style="vertical-align:bottom;border-top:none;!important">
+                          <div class="align-baseline">
+                          <span style="color:red;">*</span> marked fields are mandatory. Please enter the correct information. It will help us to solve your issues in short timespan.
+                          </div>
+                    </td>
+                    </tr>
+                    </table>
+                    </div>
+                    </div>
+                    <center>
+                    <div class="btn-group" role="group" aria-label="Third group">
+                        <button class="btn btn btn-success" type="submit">Sign Up</button>
+                  </div>
+                  <div class="btn-group" role="group" aria-label="Third group">
+                        <a class="btn btn btn-warning" href="{% url 'arduino_blog:user_login' %}">I have an account</a>
+                  </div>
+                  </center>
+                <!-- </div> -->
+            </form>
+            <br>
+            </div>
+        <!--</div>-->
+       </section>
+{% endblock %}
