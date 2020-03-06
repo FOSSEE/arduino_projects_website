@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+ {% block content %}
+<section id="view_proposal" class="section view_proposal">
+    <div class="container">
+        <p>
+            <center>
+                <h2>View Proposals</h2>
+            </center>
+        </p>
+            <form action="" method="post" onsubmit="return confirm('Are You Sure?');">
+                {% csrf_token %}
+               
+                    <div class="table-responsive">
+                        <table id ="myTable" width="100%" cellpadding="10" class="table table-striped table-bordered table-hover tablesorter">
+                            <colgroup>
+                            {% if user.is_staff  %}
+
+                                <col width="15%" />
+                                <col width="20%" />
+                                
+                                <col width="30%" />
+                                <col width="10%" />
+                            {% else %}
+                                <col width="70%" />
+                                <col width="10%" />
+                                <col width="10%" />
+                               
+                            {% endif %}
+                            </colgroup>
+                            {% if user.is_staff  %}
+                            <th style="text-align: center;"></th>
+                            <th style="text-align: center;">Speaker
+                            {% endif %}
+                                
+                                    <th style="text-align: center;"> Title
+                            {% if not user.is_staff %}
+                                        <th style="text-align: center;"> View
+                            {% endif %}
+                            
+                                                    <th style="text-align: center;"> Status
+                            {% for proposal in proposals %}
+                                                        <tr>
+                            {% if user.is_staff %}
+                                                            <td style="text-align: center;">
+                                {% if proposal.status == 'Rejected' %}
+                                {% else %}
+                                                                <center>
+                                                                    <input type = "checkbox" name="delete_proposal" value = {{proposal.id}}></input>
+                                                                </center>
+                                                            </td>
+                            {% endif %}
+                                                            <td style="text-align: center;">
+                                                                <h3>
+                                                                    <span class="label label-primary">{{ proposal.user.first_name }} {{ proposal.user.last_name }}</span>
+                                                                </h3>
+                                                            </td>
+                            {% endif %}
+                            {% if user.is_staff  %}
+                                                            <td style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:.5px;">
+                                                                <a title="Title : {{proposal.title}}, Tags: {{proposal.tags}}" href="{% url 'arduino_blog:abstract_details' proposal.id %}">{{proposal.title_of_the_project}}</a>
+                                                            </td>
+                            {% else %}
+                                                            <td  style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:.5px;"> {{proposal.title_of_the_project}}</td>
+                                                            <td style="text-align: center;">
+                                                                <a href="{% url 'arduino_blog:abstract_details' proposal.id %}" class="btn btn-warning">View</a>
+                                                            </td>
+                            {% endif %}
+                                                            <td style="text-align: center;">
+                                {% if proposal.status == 'Accepted' %}
+                                                                <h5 style="color:green;">{{proposal.status}}</h5>
+                                {% elif proposal.status == 'Rejected' %}
+                                                                <h5 style="color:red;">{{proposal.status}}</h5>
+                                {% elif proposal.status == 'Commented' %}
+                                                                <h5 style="color:brown;">{{proposal.status}}</h5>
+                                {% elif proposal.status == 'Edit' %}
+                                {% if user.is_staff %}
+                                                                <h5 style="color:grey;">{{proposal.status}}</h5>
+                                {% else %}
+                                                                <a href="{% url 'arduino_blog:edit_proposal' proposal.id %}" class ="btn btn-info">{{proposal.status}}</a>
+                                {% endif %}
+                                {% else %}  
+                                                                <h5 style="color:#ff6600;">{{proposal.status}}</h5>
+                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                        {% endfor %}
+                                                    </table>
+                                                </div>
+                                                <br> 
+                                                   
+                                                
+                {% if user.is_staff  %}
+                                                 <!-- <input type="submit" id="delete" class ="btn btn-info" value="Delete" name="delete"/> -->
+                                                 <center>
+                                                    <input type="submit" id="accept" class ="btn btn-info" value="Accept" name="accept"/>
+                                                    <input type="submit" id="rejected" class ="btn btn-info"  value="Reject" name="reject"/>
+                                                    <input type="submit" id="resubmit" class ="btn btn-info"  value="Resubmit" name="resubmit"/> 
+                                                </center> 
+                {% endif %}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 18vh;"></div>
+                            </section>
+ {% endblock %}

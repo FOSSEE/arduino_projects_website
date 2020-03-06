@@ -7,6 +7,11 @@ from . import views
 
 app_name = 'arduino_blog'
 urlpatterns = [
+    re_path(r'^comment-abstract/(?P<proposal_id>\d+)$',
+    	views.comment_abstract, name='comment_abstract'),
+	re_path(r'^abstract-details/(?P<proposal_id>\d+)$', 
+		views.abstract_details, name='abstract_details'),
+	url(r'^view-abstracts/$', views.view_abstracts, name="view_abstracts"),
 	url(r'^accounts/logout/$', views.user_logout, name="user_logout"),
 	url(r'^activate/(?P<key>.+)$', views.activate_user, name="activate"),
     url(r'^new_activation/$', views.new_activation, name='new_activation'),

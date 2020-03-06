@@ -5,6 +5,9 @@ from django.core.validators import RegexValidator
 import os
 from datetime import datetime
 from arduino_projects_website import settings
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericRelation
 
 position_choices = (
     ("student", "Student"),
@@ -83,9 +86,9 @@ class BaseClass(models.Model):
 class Profile(BaseClass):
     """Profile for users"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=32, blank=True, choices=title)
+    #title = models.CharField(max_length=32, blank=True, choices=title)
     institute = models.CharField(max_length=150)
-    phone = models.CharField(max_length=10)
+    #phone = models.CharField(max_length=10)
     position = models.CharField(max_length=32, choices=position_choices)
     how_did_you_hear_about_us = models.CharField(
         max_length=255, blank=True, choices=source)
@@ -110,6 +113,15 @@ def get_document_dir(instance, filename):
     # print "----------------->",instance.user
     return '%s/attachment/%s/%s.%s' % (instance.user, instance.proposal_type, fname+'_'+str(instance.user), fext)
 
+
+class Comment(BaseClass):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,)
+    body = models.CharField(max_length=500)
+    is_public = models.BooleanField(default = False)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
+
 class Proposal(BaseClass):
     user = models.ForeignKey(User, on_delete=models.CASCADE,)
     name_of_author = models.CharField(max_length=200, default='None')
@@ -117,10 +129,15 @@ class Proposal(BaseClass):
     email = models.CharField(max_length=128)
     title_of_the_project = models.CharField(max_length=250)
     abstract = models.TextField(max_length=700)
+    references = models.CharField(max_length = 200, default = 'None')
     #attachment = models.FileField(upload_to=get_document_dir)
     status = models.CharField(max_length=100, default='Pending', editable=True)
     completion_date = models.DateTimeField(null=True, blank=True)
     approval_date = models.DateTimeField(null=True, blank=True)
     proposal_status = models.IntegerField(default=0, editable=True)
     #tags = models.CharField(max_length=250)
-    terms_and_conditions = models.BooleanField(default= 'True')
+    terms_and_conditions = models.BooleanField(default= True)
+    comment = GenericRelation(Comment)
+
+
+                
