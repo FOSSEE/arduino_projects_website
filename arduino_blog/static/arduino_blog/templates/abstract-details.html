@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+ {% block content %}
+          <section id="abstract_details" class="section abstract_details">
+        <div class="container">
+            <p>
+            <center>
+                <h2>Abstract Details</h2>
+            </center>
+            </p>
+            <h3><span class="label label-primary">{{ proposal.user.first_name }} {{ proposal.user.last_name }}</span></h3>
+            <hr>
+            <p><b>Title: </b>&nbsp;{{ proposal.title_of_the_project }}</p>
+            <p><b>Name of the author:</b>&nbsp;{{proposal.name_of_author}}
+            </p>
+            <p><b>About the authors: </b>&nbsp;{{ proposal.about_the_author | linebreaks }}</p>
+            <p><b>Abstract: </b>&nbsp;{{ proposal.abstract | linebreaks }}</p>
+            <p><b>Date Created: </b>&nbsp;{{ proposal.date_created }}</p>
+            <h4>Comments</h4>
+            {% for comment in comments %}
+            <div>
+                <strong>Comment By:</strong>
+                {{ user.first_name }} {{ user.last_name }}
+                <p>{{ comment.body| linebreaks }}</p>
+            </div>
+            <hr>
+            {% endfor %}
+        </div>
+        </section>
+        {% endblock %}

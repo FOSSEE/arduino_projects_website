@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<section id="comment_abstract" class="section comment_abstract">
+        <div class="container">
+            <h3>{{ proposal.user.first_name }} {{ proposal.user.last_name }}</h3>
+            <p><b>Title: </b>&nbsp;{{ proposal.title_of_the_project }}</p>
+            <p><b>Name of the author:</b>&nbsp;<span>{{proposal.name_of_author}}</span>
+            </p>
+            <p align="justify"><b>About the authors: </b>&nbsp;{{ proposal.about_the_author |linebreaks }}</p>
+           
+            <p align="justify"><b>Abstract:</b>&nbsp;
+           
+                {{ proposal.abstract | linebreaks }}
+            </p>
+            <p><b>Date Created: </b>&nbsp;{{ proposal.date_created }}</p>
+            <h4>Comments</h4>
+            {% for comment in comments %}
+            <div>
+                <strong>Comment By:</strong>
+                {{ user.first_name }} {{ user.last_name }}
+                <p>{{ comment.body| linebreaks }}</p>
+            </div>
+            <hr>
+            </form>
+            {% endfor %}
+            <form action="{% url 'arduino_blog:comment_abstract' proposal.id %}" method='POST' enctype="multipart/form-data">
+                {% csrf_token %}
+                <textarea rows="5" cols="100" id="comment" class= "comment" name="comment" placeholder = "Add comment here..."></textarea><br/>
+                <input class="button special"  type="submit" value="Comment">
+                <a href="{% url 'arduino_blog:view_abstracts' %}" class="btn btn-primary">Back</a>
+            </form>
+        </div>
+        </section>
+        {% endblock %}
+
+

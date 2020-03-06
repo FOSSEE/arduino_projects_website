@@ -24,7 +24,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.utils import timezone
 from arduino_blog.models import (
-    Profile, User, Proposal
+    Profile, User, Proposal, Comment
 )
 from .send_emails import (send_user_mail,
                           generate_activation_key)
@@ -137,12 +137,10 @@ class UserRegistrationForm(forms.Form):
         attrs={'placeholder': 'Enter valid email id'}))
     password = forms.CharField(max_length=32, widget=forms.PasswordInput())
     confirm_password = forms.CharField(max_length=32, widget=forms.PasswordInput())
-    title = forms.ChoiceField(choices=title)
     first_name = forms.CharField(max_length=32, label='First name', widget=forms.TextInput(
         attrs={'placeholder': 'First name'}))
     last_name = forms.CharField(max_length=32, label='Last name', widget=forms.TextInput(
         attrs={'placeholder': 'Last name'},))
-    phone = forms.CharField(widget=forms.TextInput(attrs={'maxlength': '10', 'type': 'number'}))
     institute = forms.CharField(max_length=32, 
         label='Institute/Organization/Company', widget=forms.TextInput())
     position = forms.ChoiceField(choices = position_choices)
@@ -202,9 +200,7 @@ class UserRegistrationForm(forms.Form):
         new_profile.institute = cleaned_data["institute"]
         new_profile.position = cleaned_data["position"]
         new_profile.pincode = cleaned_data["pincode"]
-        new_profile.phone = cleaned_data["phone"]
         new_profile.city = cleaned_data["city"]
-        new_profile.title = cleaned_data["title"]
         new_profile.state = cleaned_data["state"]
         new_profile.how_did_you_hear_about_us = cleaned_data["how_did_you_hear_about_us"]
         new_profile.activation_key = generate_activation_key(
@@ -251,7 +247,8 @@ class AbstractProposalForm(forms.ModelForm):
                                error_messages={
                                    'required': 'Abstract field required.'},
                                )
-
+    references = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'References(if any)'})
+                            )
     completion_date = forms.DateTimeField(
             input_formats=['%YY-%mm-%dd'],
             widget=forms.DateTimeInput(attrs={

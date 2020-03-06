@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from arduino_blog.forms import UserRegistrationForm, AbstractProposalForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
-from arduino_blog.models import Proposal, Profile
+from arduino_blog.models import Proposal, Profile, Comment
 from .send_emails import (send_user_mail,
                           generate_activation_key)
 from django.utils import timezone
@@ -243,3 +243,99 @@ def send_email(sender_email, to, subject, message, bcc_email=None):
     print("mail sent")
     email.send(fail_silently=True)
 
+@login_required
+@csrf_protect
+def view_abstracts(request):
+    user = request.user
+    context = {}
+    count_list = []
+    if request.user.is_authenticated:
+        if user.is_staff:
+            proposals = Proposal.objects.all()
+            context['proposals'] = proposals
+            context['user'] = user
+            return render(request, 'view-proposals.html', context)
+        elif user is not None:
+            if Proposal.objects.filter(user=user).exists:
+                proposals = Proposal.objects.filter(
+                    user=user)
+                context['counts'] = count_list
+                context['proposals'] = proposals
+                context['user'] = user
+            return render(request, 'view-proposals.html', context)
+        else:
+            return render(request, 'login.html')
+    else:
+        return render(request, 'login.html', context)
+
+@login_required
+def abstract_details(request, proposal_id=None):
+    user = request.user
+    context = {}
+    if user.is_authenticated:
+        if user.is_staff:
+            comments = Comment.objects.filter(object_id = proposal_id)
+            context['comments'] = comments
+            proposal = Proposal.objects.get(id=proposal_id)
+            context['proposal'] = proposal
+            context['user'] = user
+            return render(request, 'comment-abstract.html', context)
+        elif user is not None:
+            try:
+                proposal = Proposal.objects.get(id=proposal_id)
+                comments = Comment.objects.filter(object_id= proposal_id)
+                if proposal.user == user:
+                    try:
+                        context['proposal'] = proposal
+                        context['comments'] = comments
+                    except:
+                        pass
+                    context['comments'] = comments
+                    context['proposal'] = proposal
+                    context['user'] = user
+                    return render(request, 'abstract-details.html', context)
+                else:
+                    return render(request, 'home.html', context)
+            except:
+                return render(request, 'abstract-details.html', context)
+        else:
+            return render(request, 'home.html', context)
+    else:
+        return render(request, 'home.html', context)
+
+@login_required
+def comment_abstract(request, proposal_id=None):
+    user = request.user
+    context = {}
+    if user.is_authenticated:
+        if user.is_staff:
+            try:
+                proposal = Proposal.objects.get(id=proposal_id)
+                if request.method == 'POST':
+                    #comment = Comment()
+                    text = request.POST.get('comment')
+                    #comment.user = user
+                    comment = Comment.objects.create(content_object=proposal, body = text,  user=request.user)
+                    comment.save()
+                    proposal.status = "Commented"
+                    proposal.save()
+                    comments = Comment.objects.filter(user= request.user)
+                    context['proposal'] = proposal
+                    context['comments'] = comments
+                    template = loader.get_template('comment-abstract.html')
+                    return HttpResponse(template.render(context, request))
+                else:
+                    comments = Comment.objects.filter(user=user)
+                    context['proposal'] = proposal
+                    context['comments'] = comments
+                    template = loader.get_template('comment-abstract.html')
+                    return HttpResponse(template.render(context, request))
+            except:
+                template = loader.get_template('comment-abstract.html')
+                return HttpResponse(template.render(context, request))
+        else:
+            template = loader.get_template('comment-abstract.html')
+            return HttpResponse(template.render(context, request))
+    else:
+        template = loader.get_template('comment-abstract.html')
+        return HttpResponse(template.render(context, request))     

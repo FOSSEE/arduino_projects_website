@@ -9,6 +9,7 @@ SYS_SERVER_EMAIL = 'email@email'
 
 ALLOWED_HOSTS_USER = ['127.0.0.1']
 SECRET_KEY_USER = 'sadsdasdasd' # enter secret key
+
 DEBUG_USER = True
 
 TO_EMAIL = 'email@email'
@@ -31,8 +32,8 @@ PRODUCTION_URL = ''
 EMAIL_HOST_USER_SERVER = 'localhost'
 EMAIL_HOST_PASSWORD_SERVER = ''
 EMAIL_USE_TLS_SERVER = False
-SENDER_NAME = "" # sender name
-SENDER_EMAIL = "" # sender email
+SENDER_NAME = "FOSSEE" # sender name
+SENDER_EMAIL = "info@fossee.in" # sender email
 
 REPLY_EMAIL = "" # reply email
 
