@@ -129,7 +129,7 @@ class Proposal(BaseClass):
     email = models.CharField(max_length=128)
     title_of_the_project = models.CharField(max_length=250)
     abstract = models.TextField(max_length=700)
-    references = models.CharField(max_length = 200, default = 'None')
+    references = models.TextField(default = 'None')
     #attachment = models.FileField(upload_to=get_document_dir)
     status = models.CharField(max_length=100, default='Pending', editable=True)
     completion_date = models.DateTimeField(null=True, blank=True)

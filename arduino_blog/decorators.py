@@ -48,7 +48,7 @@ def is_proposal_submitted(func):
                         is_sub = _q.get(Q(user_id=user.id)&Q(proposal_status='0'))
                         if is_sub.proposal_status == 0:
                             context['success'] = True
-                            context['msg'] = "You have alredy submited a \
+                            context['msg'] = "You have already submitted a \
                                           proposal. Your proposal is under \
                                           review"
                             return render(
