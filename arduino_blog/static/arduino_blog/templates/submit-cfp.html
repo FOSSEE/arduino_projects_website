@@ -59,10 +59,21 @@
                         </label>
                     {% render_field proposal_form.completion_date %}
                     </div>
+                    <p><b><u>Terms and Conditions</u></b></p>
+                    <ul>
+                        <li>The decision of the FOSSEE and Spoken Tutorial projects, will be final.</li>
+                        <li>Copyright details will be as per the agreed Terms and Conditions. </li>
+                        <li>The FOSSEE and Spoken Tutorial projects, reserve the rights to release this content under Creative Commons Attribution-ShareAlike 4.0 International License in any format.
+                        </li>
+                        <li><a href="#" target="_blank">Read More</a></li>
+                    </ul>
                     <div class="form-inline">
                         <div class="form-check">
+
                         {% render_field proposal_form.terms_and_conditions %}
-                            <label for="terms_and_conditions"> &nbsp; I agree to the terms and conditions
+                            <label for="terms_and_conditions"> 
+                            
+                             I agree to the terms and conditions
                                 <span style="color:red;">*</span>
                             </label>
                             
@@ -72,7 +83,7 @@
               {% csrf_token %}
                     <center>
                         <button id="subbtn" class="btn btn-info" type="submit" >Submit</button>
-                        <a href="#" class="btn btn-info" role="button">Back</a>
+                        <a href="{% url 'arduino_blog:index' %}" class="btn btn-info" role="button">Back</a>
                     </center>
                 </form>
                 </div>
